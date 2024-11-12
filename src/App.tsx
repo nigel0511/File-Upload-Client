@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -29,6 +29,7 @@ function App() {
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [page, setPage] = useState(0);
+  const ref = useRef<HTMLInputElement | null>(null);
 
   const Upload = z.object({
     title: z.string().refine((title) => title.length > 0, "Title is required"),
@@ -158,7 +159,27 @@ function App() {
               size="small"
               error={Boolean(errors?.video)}
             >
-              <input type="file" onChange={onFileChange}></input>
+              <input
+                ref={ref}
+                id="file"
+                type="file"
+                accept="video/*"
+                className="hidden"
+                onChange={onFileChange}
+              />
+
+              <button
+                type="button"
+                className="w-full py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200 ease-in-out"
+                onClick={() => ref.current?.click()}
+              >
+                Select File
+              </button>
+              {/* <input
+                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700 bg-gray-50 outline-none transition duration-200 ease-in-out"
+                type="file"
+                onChange={onFileChange}
+              ></input> */}
               <FormHelperText className=" text-red-600">
                 {errors?.video?.message}
               </FormHelperText>
