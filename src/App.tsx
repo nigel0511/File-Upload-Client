@@ -128,14 +128,12 @@ function App() {
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<any>;
-        const message = axiosError.response?.data?.message ?? "Unknown error";
-        toast.error(axiosError.response?.data?.message, {
+        const message = axiosError.message ?? "Unknown error";
+        toast.error(message, {
           position: "top-center",
           autoClose: 5000,
         });
         console.error("API Error:", message);
-      } else {
-        console.error("Unexpected error:", error);
       }
     }
   };
