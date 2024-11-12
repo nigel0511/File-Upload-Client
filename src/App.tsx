@@ -3,20 +3,18 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import axios, { AxiosError } from "axios";
-import {
-  Button,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  TextField,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
+import TextField from "@mui/material/TextField";
+import Checkbox from "@mui/material/Checkbox";
+import LinearProgress from "@mui/material/LinearProgress";
 import z from "zod";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import LinearProgress from "@mui/material/LinearProgress";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs, { Dayjs } from "dayjs";
@@ -25,11 +23,11 @@ import _ from "lodash";
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function App() {
+  const ref = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<File | null>(null);
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [page, setPage] = useState(0);
-  const ref = useRef<HTMLInputElement | null>(null);
 
   const Upload = z.object({
     title: z.string().refine((title) => title.length > 0, "Title is required"),
@@ -175,11 +173,6 @@ function App() {
               >
                 Select File
               </button>
-              {/* <input
-                className="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700 bg-gray-50 outline-none transition duration-200 ease-in-out"
-                type="file"
-                onChange={onFileChange}
-              ></input> */}
               <FormHelperText className=" text-red-600">
                 {errors?.video?.message}
               </FormHelperText>
